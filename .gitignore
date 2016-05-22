@@ -3,6 +3,8 @@
 !ext/**
 !src
 !src/**
+!test
+!test/**
 !include
 !include/**
 !.git*

@@ -22,3 +22,4 @@ matrix:
 
 script:
   - make -j$(nproc)
+  - make run-tests

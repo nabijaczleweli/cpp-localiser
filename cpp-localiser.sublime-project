@@ -2,8 +2,17 @@
 	"build_systems":
 	[
 		{
-			"cmd": "make --no-print-directory -C\"$project_path\" all",
-			"name": "Build cpp-localiser"
+			"working_dir": "$project_path",
+			"cmd": "make -j10 all run-tests",
+			"name": "Build cpp-localiser and run tests",
+
+			"target": "ansi_color_build",
+			"syntax": "Packages/ANSIescape/ANSI.tmLanguage"
+		},
+		{
+			"working_dir": "$project_path",
+			"cmd": "make -j10 clean",
+			"name": "Clean cpp-localiser"
 		}
 	],
 	"folders":
@@ -17,6 +26,11 @@
 			"follow_symlinks": true,
 			"name": "Headers",
 			"path": "include"
+		},
+		{
+			"follow_symlinks": true,
+			"name": "Test sources",
+			"path": "test"
 		},
 		{
 			"file_include_patterns":

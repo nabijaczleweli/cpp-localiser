@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 
-# Copyright (c) 2015 nabijaczleweli
+# Copyright (c) 2016 nabijaczleweli
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy of
 # this software and associated documentation files (the "Software"), to deal in
@@ -25,15 +25,21 @@ include configMakefile
 
 SOURCES = $(sort $(wildcard src/*.cpp) $(wildcard src/**/*.cpp) $(wildcard src/**/**/*.cpp) $(wildcard src/**/**/**/*.cpp))
 OBJECTS = $(patsubst src/%.cpp,$(BUILD)/obj/%$(OBJ),$(SOURCES))
+TEST_SOURCES = $(sort $(wildcard test/*.cpp) $(wildcard test/**/*.cpp) $(wildcard test/**/**/*.cpp) $(wildcard test/**/**/**/*.cpp))
+TEST_OBJECTS = $(patsubst test/%.cpp,$(BUILD)/test/obj/%$(OBJ),$(TEST_SOURCES))
 
 
-.PHONY : clean all dll stlib
+.PHONY : clean all dll stlib tests run-tests
 
-all : dll stlib
+all : dll stlib tests
 
 clean :
 	rm -rf $(BUILD)
 
+run-tests : tests
+	@$(BUILD)/test/cpp-localiser-tests$(EXE) --use-colour yes
+
+tests : stlib $(BUILD)/test/cpp-localiser-tests$(EXE)
 dll : $(BUILD)/$(PREDLL)cpp-localiser$(DLL)
 stlib : $(BUILD)/libcpp-localiser$(ARCH)
 
@@ -44,7 +50,14 @@ $(BUILD)/$(PREDLL)cpp-localiser$(DLL) : $(OBJECTS)
 $(BUILD)/libcpp-localiser$(ARCH) : $(OBJECTS)
 	ar crs $@ $^
 
+$(BUILD)/test/cpp-localiser-tests$(EXE) : $(TEST_OBJECTS)
+	$(CXX) $(CXXAR) $(PIC) -o$@ $^ -Lout -lcpp-localiser
+
 
 $(BUILD)/obj/%$(OBJ) : src/%.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXAR) $(PIC) -Iinclude -c -o$@ $^
+
+$(BUILD)/test/obj/%$(OBJ) : test/%.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXAR) $(PIC) -Iinclude -Iext/Catch/include -DCATCH_CONFIG_COLOUR_ANSI -c -o$@ $^

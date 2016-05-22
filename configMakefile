@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 
-# Copyright (c) 2015 nabijaczleweli
+# Copyright (c) 2016 nabijaczleweli
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy of
 # this software and associated documentation files (the "Software"), to deal in
@@ -19,10 +19,12 @@
 # IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
 ifeq "$(OS)" "Windows_NT"
 	DLL = .dll
 	PREDLL =
 	PIC =
+	EXE = .exe
 else
 	PREDLL = lib
 	PIC = -fPIC
@@ -31,6 +33,7 @@ else
 	else
 		DLL = .so
 	endif
+	EXE =
 endif
 
 ifeq "$(BUILD)" ""

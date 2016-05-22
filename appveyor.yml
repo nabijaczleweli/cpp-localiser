@@ -17,6 +17,7 @@ install:
 build: off
 build_script:
   - make
+  - make run-tests
 
 notifications:
   - provider: Email
