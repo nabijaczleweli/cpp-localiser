@@ -49,6 +49,7 @@ namespace cpp_localiser {
 		/** Adds keys from `loc` for which there are no elements in `this` */
 		localiser & merge(const localiser & loc);
 		localiser & open(const std::string & localisation_root, const std::string & locale = "en_US");
+		localiser & swap(localiser & with);
 
 		bool empty() const;
 		bool can_translate_key(const std::string & key) const;
@@ -57,4 +58,8 @@ namespace cpp_localiser {
 		// template<class... T>
 		// std::string translate_key_format(const std::string & key, const T &... args) const;
 	};
+}
+
+namespace std {
+	void swap(cpp_localiser::localiser & lhs, cpp_localiser::localiser & rhs);
 }

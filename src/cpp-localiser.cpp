@@ -64,6 +64,13 @@ localiser & localiser::open(const std::string & localisation_root, const std::st
 	return merge(localiser(localisation_root, locale));
 }
 
+localiser & localiser::swap(localiser & with) {
+	language.swap(with.language);
+	end      = language.cend();
+	with.end = with.language.cend();
+	return *this;
+}
+
 void localiser::init(std::istream & in) {
 	for(std::string line; getline(in, line);) {
 		if(!line.size())
@@ -93,4 +100,8 @@ const std::string & localiser::translate_key(const std::string & key) const {
 		return key;
 	else
 		return itr->second;
+}
+
+void std::swap(localiser & lhs, localiser & rhs) {
+	lhs.swap(rhs);
 }
