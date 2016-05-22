@@ -1,2 +1,2 @@
-# cpp-localiser
+# cpp-localiser [![Licence](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE) [![TravisCI Build Status](https://travis-ci.org/nabijaczleweli/cpp-localiser.svg?branch=master)](https://travis-ci.org/nabijaczleweli/cpp-localiser) [![AppVeyorCI Build Status](https://ci.appveyor.com/api/projects/status/gnah19tp7b5ri60k?svg=true)](https://ci.appveyor.com/project/nabijaczleweli/cpp-localiser)
 Localisation library for C++, not entirely unlike the Forge one
