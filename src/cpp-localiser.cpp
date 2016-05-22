@@ -28,7 +28,7 @@
 using namespace cpp_localiser;
 
 
-static const char * locale_midfix(const std::string & localisation_root) {
+static inline const char * locale_midfix(const std::string & localisation_root) {
 	if(localisation_root.empty() || localisation_root.back() == '/' || localisation_root.back() == '\\')
 		return "";
 	else
