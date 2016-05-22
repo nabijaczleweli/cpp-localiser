@@ -25,11 +25,10 @@
 #include <fstream>
 
 
-using namespace std;
 using namespace cpp_localiser;
 
 
-static const char * locale_midfix(const string & localisation_root) {
+static const char * locale_midfix(const std::string & localisation_root) {
 	if(localisation_root.empty() || localisation_root.back() == '/' || localisation_root.back() == '\\')
 		return "";
 	else
@@ -37,16 +36,16 @@ static const char * locale_midfix(const string & localisation_root) {
 }
 
 
-localiser::localiser(const string & localisation_root) : localiser(localisation_root, "en_US") {}
+localiser::localiser(const std::string & localisation_root) : localiser(localisation_root, "en_US") {}
 
-localiser::localiser(nothrow_t) {}
+localiser::localiser(std::nothrow_t) {}
 
-localiser::localiser(istream & in) {
+localiser::localiser(std::istream & in) {
 	init(in);
 }
 
-localiser::localiser(const string & localisation_root, const string & locale) {
-	ifstream in(localisation_root + locale_midfix(localisation_root) + locale + ".lang");
+localiser::localiser(const std::string & localisation_root, const std::string & locale) {
+	std::ifstream in(localisation_root + locale_midfix(localisation_root) + locale + ".lang");
 	if(in.is_open())
 		init(in);
 	end = language.cend();
@@ -63,19 +62,19 @@ localiser & localiser::merge(const localiser & loc) {
 	return *this;
 }
 
-localiser & localiser::open(const string & loc) {
+localiser & localiser::open(const std::string & loc) {
 	return merge(localiser(loc));
 }
 
-void localiser::init(istream & in) {
-	for(string line; getline(in, line);) {
+void localiser::init(std::istream & in) {
+	for(std::string line; getline(in, line);) {
 		if(!line.size())
 			continue;
 		ltrim(line);
 		if(line[0] == '#')
 			continue;
 		const auto idx = line.find('=');
-		if(idx == string::npos)
+		if(idx == std::string::npos)
 			continue;
 		language.emplace(rtrim(line.substr(0, idx)), trim(line.substr(idx + 1)));
 	}
@@ -86,11 +85,11 @@ bool localiser::empty() const {
 	return language.empty();
 }
 
-bool localiser::can_translate_key(const string & key) const {
+bool localiser::can_translate_key(const std::string & key) const {
 	return !language.empty() && language.count(key) > 0;
 }
 
-const string & localiser::translate_key(const string & key) const {
+const std::string & localiser::translate_key(const std::string & key) const {
 	const auto & itr = language.find(key);
 	if(itr == end)
 		return key;
