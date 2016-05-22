@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 
-// Copyright (c) 2014 nabijaczleweli
+// Copyright (c) 2016 nabijaczleweli
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -36,6 +36,7 @@ static inline const char * locale_midfix(const std::string & localisation_root) 
 }
 
 
+// Can't be defaulted for some reason?
 localiser::localiser() {}
 
 localiser::localiser(std::istream & in) {
@@ -73,7 +74,7 @@ localiser & localiser::swap(localiser & with) {
 
 void localiser::init(std::istream & in) {
 	for(std::string line; getline(in, line);) {
-		if(!line.size())
+		if(line.empty())
 			continue;
 		ltrim(line);
 		if(line[0] == '#')

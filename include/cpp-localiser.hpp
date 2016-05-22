@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 
-// Copyright (c) 2014 nabijaczleweli
+// Copyright (c) 2016 nabijaczleweli
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -39,8 +39,7 @@ namespace cpp_localiser {
 		void init(std::istream & from);
 
 	public:
-		/** Used to disambugate the opening and non-opening constructors */
-		explicit localiser();
+		localiser() /* = default */;
 		explicit localiser(std::istream & from);
 		explicit localiser(const std::string & localisation_root, const std::string & locale = "en_US");
 		/** Turns out to be loc0.merge(loc1) */
