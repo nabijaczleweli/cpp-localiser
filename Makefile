@@ -39,7 +39,7 @@ clean :
 run-tests : tests
 	@$(BUILD)/test/cpp-localiser-tests$(EXE) --use-colour yes
 
-tests : stlib $(BUILD)/test/cpp-localiser-tests$(EXE)
+tests : $(BUILD)/test/cpp-localiser-tests$(EXE)
 dll : $(BUILD)/$(PREDLL)cpp-localiser$(DLL)
 stlib : $(BUILD)/libcpp-localiser$(ARCH)
 
@@ -50,8 +50,8 @@ $(BUILD)/$(PREDLL)cpp-localiser$(DLL) : $(OBJECTS)
 $(BUILD)/libcpp-localiser$(ARCH) : $(OBJECTS)
 	ar crs $@ $^
 
-$(BUILD)/test/cpp-localiser-tests$(EXE) : $(TEST_OBJECTS)
-	$(CXX) $(CXXAR) $(PIC) -o$@ $^ -Lout -lcpp-localiser
+$(BUILD)/test/cpp-localiser-tests$(EXE) : $(TEST_OBJECTS) $(OBJECTS)
+	$(CXX) $(CXXAR) $(PIC) -o$@ $^
 
 
 $(BUILD)/obj/%$(OBJ) : src/%.cpp
