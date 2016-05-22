@@ -6,6 +6,7 @@
 !.git*
 !.clang-format
 !.travis.yml
+!appveyor.yml
 !*Makefile
 !*.sublime-project
 !LICENSE
