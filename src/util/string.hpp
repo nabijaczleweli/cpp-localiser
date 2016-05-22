@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 
-// Copyright (c) 2014 nabijaczleweli
+// Copyright (c) 2016 nabijaczleweli
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -30,13 +30,13 @@
 namespace cpp_localiser {
 	// Stolen from http://stackoverflow.com/a/217605/2851815
 	static inline std::string & ltrim(std::string & s) {
-		s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](char c) { return std::isspace(c); }));
+		s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](auto c) { return !std::isspace(c); }));
 		return s;
 	}
 
 	// Stolen from http://stackoverflow.com/a/217605/2851815
 	static inline std::string & rtrim(std::string & s) {
-		s.erase(std::find_if(s.rbegin(), s.rend(), [](char c) { return std::isspace(c); }).base(), s.end());
+		s.erase(std::find_if(s.rbegin(), s.rend(), [](auto c) { return !std::isspace(c); }).base(), s.end());
 		return s;
 	}
 
