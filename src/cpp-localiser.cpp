@@ -26,6 +26,7 @@
 
 
 using namespace std;
+using namespace cpp_localiser;
 
 
 static const char * locale_midfix(const string & localisation_root) {
@@ -36,37 +37,37 @@ static const char * locale_midfix(const string & localisation_root) {
 }
 
 
-localizer::localizer(const string & localisation_root) : localizer(localisation_root, "en_US") {}
+localiser::localiser(const string & localisation_root) : localiser(localisation_root, "en_US") {}
 
-localizer::localizer(nothrow_t) {}
+localiser::localiser(nothrow_t) {}
 
-localizer::localizer(istream & in) {
+localiser::localiser(istream & in) {
 	init(in);
 }
 
-localizer::localizer(const string & localisation_root, const string & locale) {
+localiser::localiser(const string & localisation_root, const string & locale) {
 	ifstream in(localisation_root + locale_midfix(localisation_root) + locale + ".lang");
 	if(in.is_open())
 		init(in);
 	end = language.cend();
 }
 
-localizer::localizer(const localizer & loc0, const localizer & loc1) : localizer(loc0) {
+localiser::localiser(const localiser & loc0, const localiser & loc1) : localiser(loc0) {
 	merge(loc1);
 }
 
 /** Adds keys from `loc` for which there are no elements in `this` */
-localizer & localizer::merge(const localizer & loc) {
+localiser & localiser::merge(const localiser & loc) {
 	language.insert(loc.language.begin(), loc.language.cend());
 	end = language.cend();
 	return *this;
 }
 
-localizer & localizer::open(const string & loc) {
-	return merge(localizer(loc));
+localiser & localiser::open(const string & loc) {
+	return merge(localiser(loc));
 }
 
-void localizer::init(istream & in) {
+void localiser::init(istream & in) {
 	for(string line; getline(in, line);) {
 		if(!line.size())
 			continue;
@@ -81,15 +82,15 @@ void localizer::init(istream & in) {
 	end = language.cend();
 }
 
-bool localizer::empty() const {
+bool localiser::empty() const {
 	return language.empty();
 }
 
-bool localizer::can_translate_key(const string & key) const {
+bool localiser::can_translate_key(const string & key) const {
 	return !language.empty() && language.count(key) > 0;
 }
 
-const string & localizer::translate_key(const string & key) const {
+const string & localiser::translate_key(const string & key) const {
 	const auto & itr = language.find(key);
 	if(itr == end)
 		return key;

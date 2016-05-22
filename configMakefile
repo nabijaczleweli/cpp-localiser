@@ -40,4 +40,4 @@ endif
 OBJ = .o
 ARCH = .a
 AR = ar
-CPPAR = -pedantic -O3 -fomit-frame-pointer -std=c++14 -Wall -Wextra -pipe
+CXXAR = -pedantic -O3 -fomit-frame-pointer -std=c++14 -Wall -Wextra -pipe

@@ -39,7 +39,7 @@ stlib : $(BUILD)/libcpp-localiser$(ARCH)
 
 
 $(BUILD)/$(PREDLL)cpp-localiser$(DLL) : $(OBJECTS)
-	$(CXX) $(CPPAR) -shared $(PIC) -o$@ $^
+	$(CXX) $(CXXAR) -shared $(PIC) -o$@ $^
 
 $(BUILD)/libcpp-localiser$(ARCH) : $(OBJECTS)
 	ar crs $@ $^
@@ -47,4 +47,4 @@ $(BUILD)/libcpp-localiser$(ARCH) : $(OBJECTS)
 
 $(BUILD)/obj/%$(OBJ) : src/%.cpp
 	@mkdir -p $(dir $@)
-	$(CXX) $(CPPAR) $(PIC) -Iinclude -c -o$@ $^
+	$(CXX) $(CXXAR) $(PIC) -Iinclude -c -o$@ $^
