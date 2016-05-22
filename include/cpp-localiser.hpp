@@ -39,7 +39,7 @@ namespace cpp_localiser {
 		void init(std::istream & from);
 
 	public:
-		localiser() /* = default */;
+		localiser();
 		explicit localiser(std::istream & from);
 		explicit localiser(const std::string & localisation_root, const std::string & locale = "en_US");
 		/** Turns out to be loc0.merge(loc1) */
@@ -54,8 +54,6 @@ namespace cpp_localiser {
 		bool can_translate_key(const std::string & key) const;
 
 		const std::string & translate_key(const std::string & key) const;
-		// template<class... T>
-		// std::string translate_key_format(const std::string & key, const T &... args) const;
 	};
 }
 

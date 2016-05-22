@@ -24,19 +24,22 @@
 #include "cpp-localiser.hpp"
 #include "main.hpp"
 #include <fstream>
-#include <iostream>
 #include <sstream>
 
 
 TEST_CASE("No-arg constructor makes for empty localiser", "[constructor]") {
+	std::mt19937 rand_gen{std::random_device{}()};
+
 	const cpp_localiser::localiser loc;
 
 	CHECK(loc.empty());
 
-	std::uniform_int_distribution<int> dist(' ', '~');
-	std::string key(10, '\0');
+	std::uniform_int_distribution<int> char_dist(' ', '~');
+	std::uniform_int_distribution<int> len_dist(1, 10);
+	std::string key;
 	for(auto i = 0u; i < 100u; ++i) {
-		std::generate(key.begin(), key.end(), [&]() { return dist(rand_gen); });
+		key.resize(len_dist(rand_gen));
+		std::generate(key.begin(), key.end(), [&]() { return char_dist(rand_gen); });
 		CHECK_FALSE(loc.can_translate_key(key));
 	}
 }
@@ -59,12 +62,12 @@ fdsa=asdf
 TEST_CASE("root+lang constructor works properly", "[constructor]") {
 	const auto work_dir = temp_dir + "/root-lang-ctor/";
 	make_dir(work_dir);
-	std::ofstream(work_dir + "/en_US.lang") << R"(
+	std::ofstream(work_dir + "en_US.lang") << R"(
 blerb=blurb
 blarb=blurg
 567.765=765.567
 )";
-	std::ofstream(work_dir + "/pl_PL.lang") << R"(
+	std::ofstream(work_dir + "pl_PL.lang") << R"(
 blerb=blurb_PL
 blarb=blurg_PL
 567.765=765.567_PL
@@ -88,10 +91,10 @@ blarb=blurg_PL
 TEST_CASE("two localiser constructor works properly", "[constructor]") {
 	const auto work_dir = temp_dir + "/two-localiser-ctor/";
 	make_dir(work_dir);
-	std::ofstream(work_dir + "/en_US.lang") << R"(
+	std::ofstream(work_dir + "en_US.lang") << R"(
 blarb=blurg
 )";
-	std::ofstream(work_dir + "/pl_PL.lang") << R"(
+	std::ofstream(work_dir + "pl_PL.lang") << R"(
 blarb=blurg_PL
 blerb=blurb_PL
 )";

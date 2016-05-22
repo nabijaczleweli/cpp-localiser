@@ -20,10 +20,34 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-#include <random>
-#include <string>
+#include "catch.hpp"
+#include "cpp-localiser.hpp"
+#include "main.hpp"
+#include <sstream>
 
 
-extern std::string temp_dir;
+TEST_CASE("Translation of nonexistant key returns it", "[functionality]") {
+	std::mt19937 rand_gen{std::random_device{}()};
 
-void make_dir(const std::string & path);
+	const cpp_localiser::localiser loc;
+
+	std::uniform_int_distribution<int> char_dist(' ', '~');
+	std::uniform_int_distribution<int> len_dist(1, 10);
+	std::string key;
+	for(auto i = 0u; i < 100u; ++i) {
+		key.resize(len_dist(rand_gen));
+		std::generate(key.begin(), key.end(), [&]() { return char_dist(rand_gen); });
+		REQUIRE(loc.translate_key(key) == key);
+	}
+}
+
+TEST_CASE("Translation of existing key returns value", "[functionality]") {
+	std::stringstream config_file(R"(
+asdf=fdsa
+fdsa=asdf
+)");
+	const cpp_localiser::localiser loc(config_file);
+
+	REQUIRE(loc.translate_key("asdf") == "fdsa");
+	REQUIRE(loc.translate_key("fdsa") == "asdf");
+}

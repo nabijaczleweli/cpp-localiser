@@ -37,9 +37,6 @@ static inline std::string OS_temp_dir() {
 }
 
 
-std::mt19937 rand_gen{std::random_device{}()};
-
-
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <direct.h>

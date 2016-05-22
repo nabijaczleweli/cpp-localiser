@@ -36,8 +36,7 @@ static inline const char * locale_midfix(const std::string & localisation_root) 
 }
 
 
-// Can't be defaulted for some reason?
-localiser::localiser() {}
+localiser::localiser() : end(language.cend()) {}
 
 localiser::localiser(std::istream & in) {
 	init(in);
@@ -62,7 +61,8 @@ localiser & localiser::merge(const localiser & loc) {
 }
 
 localiser & localiser::open(const std::string & localisation_root, const std::string & locale) {
-	return merge(localiser(localisation_root, locale));
+	*this = localiser(localisation_root, locale);
+	return *this;
 }
 
 localiser & localiser::swap(localiser & with) {
