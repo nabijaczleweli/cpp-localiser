@@ -36,9 +36,7 @@ static inline const char * locale_midfix(const std::string & localisation_root) 
 }
 
 
-localiser::localiser(const std::string & localisation_root) : localiser(localisation_root, "en_US") {}
-
-localiser::localiser(std::nothrow_t) {}
+localiser::localiser() {}
 
 localiser::localiser(std::istream & in) {
 	init(in);
@@ -62,8 +60,8 @@ localiser & localiser::merge(const localiser & loc) {
 	return *this;
 }
 
-localiser & localiser::open(const std::string & loc) {
-	return merge(localiser(loc));
+localiser & localiser::open(const std::string & localisation_root, const std::string & locale) {
+	return merge(localiser(localisation_root, locale));
 }
 
 void localiser::init(std::istream & in) {

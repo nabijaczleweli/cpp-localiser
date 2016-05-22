@@ -39,17 +39,16 @@ namespace cpp_localiser {
 		void init(std::istream & from);
 
 	public:
-		localiser(const std::string & localisation_root);
 		/** Used to disambugate the opening and non-opening constructors */
-		explicit localiser(std::nothrow_t);
+		explicit localiser();
 		explicit localiser(std::istream & from);
-		explicit localiser(const std::string & localisation_root, const std::string & locale);
+		explicit localiser(const std::string & localisation_root, const std::string & locale = "en_US");
 		/** Turns out to be loc0.merge(loc1) */
 		explicit localiser(const localiser & loc0, const localiser & loc1);
 
 		/** Adds keys from `loc` for which there are no elements in `this` */
 		localiser & merge(const localiser & loc);
-		localiser & open(const std::string & locale = "en_US");
+		localiser & open(const std::string & localisation_root, const std::string & locale = "en_US");
 
 		bool empty() const;
 		bool can_translate_key(const std::string & key) const;
