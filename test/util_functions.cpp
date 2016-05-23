@@ -59,38 +59,6 @@ fdsa=2
 		REQUIRE(loc.translate_key(key.first) == key.second);
 }
 
-TEST_CASE("open() removes old keys", "[util]") {
-	const auto work_dir = temp_dir + "/open-remove-keys/";
-	make_dir(work_dir);
-	std::ofstream(work_dir + "en_US.lang") << R"(
-blerb=US
-)";
-	std::ofstream(work_dir + "pl_PL.lang") << R"(
-blarb=PL
-)";
-	cpp_localiser::localiser loc(work_dir);
-	loc.open(work_dir, "pl_PL");
-
-	CHECK_FALSE(loc.empty());
-	CHECK_FALSE(loc.can_translate_key("blerb"));
-	CHECK(loc.can_translate_key("blarb"));
-	REQUIRE(loc.translate_key("blarb") == "PL");
-}
-
-TEST_CASE("open() adds keys", "[util]") {
-	const auto work_dir = temp_dir + "/open-add-keys/";
-	make_dir(work_dir);
-	std::ofstream(work_dir + "en_US.lang") << R"(
-blerb=US
-)";
-	cpp_localiser::localiser loc;
-	loc.open(work_dir);
-
-	CHECK_FALSE(loc.empty());
-	CHECK(loc.can_translate_key("blerb"));
-	REQUIRE(loc.translate_key("blerb") == "US");
-}
-
 TEST_CASE("member swap() swaps properly", "[util]") {
 	std::stringstream first_config_file(R"(
 asdf=1

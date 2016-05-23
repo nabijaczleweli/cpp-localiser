@@ -47,7 +47,6 @@ namespace cpp_localiser {
 
 		/** Adds keys from `loc` for which there are no elements in `this` */
 		localiser & merge(const localiser & loc);
-		localiser & open(const std::string & localisation_root, const std::string & locale = "en_US");
 		localiser & swap(localiser & with);
 
 		bool empty() const;

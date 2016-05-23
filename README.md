@@ -38,10 +38,6 @@ namespace cpp_localiser {
     ///
     /// Returns: *this.
     localiser & merge(const localiser & loc);
-    /// Equivalent to *this = localiser(localisation_root, locale).
-    ///
-    /// Returns: *this.
-    localiser & open(const std::string & localisation_root, const std::string & locale = "en_US");
     /// Exchange the contets of *this and with
     ///
     /// Returns: *this.

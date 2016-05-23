@@ -60,11 +60,6 @@ localiser & localiser::merge(const localiser & loc) {
 	return *this;
 }
 
-localiser & localiser::open(const std::string & localisation_root, const std::string & locale) {
-	*this = localiser(localisation_root, locale);
-	return *this;
-}
-
 localiser & localiser::swap(localiser & with) {
 	language.swap(with.language);
 	end      = language.cend();
