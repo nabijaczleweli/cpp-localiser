@@ -36,38 +36,50 @@ namespace cpp_localiser {
     /// Postconditions:
     ///   * For all X: loc.can_translate_key(X) => this->can_translate_key(X).
     ///
-    /// Returns: *this.
-    localiser & merge(const localiser & loc);
-    /// Exchange the contets of *this and with
+    /// Exceptions: strong guarantee.
     ///
     /// Returns: *this.
-    localiser & swap(localiser & with);
+    localiser & merge(const localiser & loc);
+    /// Exchange the contents of *this and with.
+    ///
+    /// Exceptions: none.
+    ///
+    /// Returns: *this.
+    localiser & swap(localiser & with) noexcept;
 
     /// Check if no language mappings are loaded.
+    ///
+    /// Exceptions: none
     ///
     /// Returns:
     ///   * true, if no language mappings have been loaded.
     ///   * false, if any language mappings have been loaded.
-    bool empty() const;
+    bool empty() const noexcept;
     /// Check if a particular language mapping exists.
+    ///
+    /// Exceptions: none
     ///
     /// Returns:
     ///   * true, if the supplied key corresponds to a language mapping.
     ///   * false, if any the supplied key does not correspond to any language mapping loaded.
-    bool can_translate_key(const std::string & key) const;
+    bool can_translate_key(const std::string & key) const noexcept;
 
     /// Translate a key according to the currently loaded language mappings.
+    ///
+    /// Exceptions: none
     ///
     /// Returns:
     ///   * The supplied key, if the language mapping does not exist (can_translate_key(key) == false).
     ///   * The language mapping's value, if the language mapping exists (can_translate_key(key) == true).
-    const std::string & translate_key(const std::string & key) const;
+    const std::string & translate_key(const std::string & key) const noexcept;
   };
 }
 
 namespace std {
-  /// Equivalent to lhs.swap(rhs).
-  void swap(cpp_localiser::localiser & lhs, cpp_localiser::localiser & rhs);
+  /// Exchange the contents of lhs and rhs.
+  ///
+  /// Exceptions: none.
+  void swap(cpp_localiser::localiser & lhs, cpp_localiser::localiser & rhs) noexcept;
 }
 ```
 

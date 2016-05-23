@@ -47,12 +47,12 @@ namespace cpp_localiser {
 
 		/** Adds keys from `loc` for which there are no elements in `this` */
 		localiser & merge(const localiser & loc);
-		localiser & swap(localiser & with);
+		localiser & swap(localiser & with) noexcept;
 
-		bool empty() const;
-		bool can_translate_key(const std::string & key) const;
+		bool empty() const noexcept;
+		bool can_translate_key(const std::string & key) const noexcept;
 
-		const std::string & translate_key(const std::string & key) const;
+		const std::string & translate_key(const std::string & key) const noexcept;
 	};
 }
 

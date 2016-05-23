@@ -60,7 +60,7 @@ localiser & localiser::merge(const localiser & loc) {
 	return *this;
 }
 
-localiser & localiser::swap(localiser & with) {
+localiser & localiser::swap(localiser & with) noexcept {
 	language.swap(with.language);
 	end      = language.cend();
 	with.end = with.language.cend();
@@ -82,15 +82,15 @@ void localiser::init(std::istream & in) {
 	end = language.cend();
 }
 
-bool localiser::empty() const {
+bool localiser::empty() const noexcept {
 	return language.empty();
 }
 
-bool localiser::can_translate_key(const std::string & key) const {
+bool localiser::can_translate_key(const std::string & key) const noexcept {
 	return !language.empty() && language.count(key) > 0;
 }
 
-const std::string & localiser::translate_key(const std::string & key) const {
+const std::string & localiser::translate_key(const std::string & key) const noexcept {
 	const auto & itr = language.find(key);
 	if(itr == end)
 		return key;
